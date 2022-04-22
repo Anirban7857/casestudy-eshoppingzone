@@ -1,23 +1,29 @@
 package com.eshoppingzone.productservice.services;
 
 import java.util.List;
-import java.util.Optional;
+
+import javax.validation.ConstraintViolationException;
 
 import com.eshoppingzone.productservice.entities.Product;
+import com.eshoppingzone.productservice.exception.ProductException;
 
 public interface ProductService {
 
 	public List<Product> getAllProducts();
 
-	public void addProducts(Product product);
+	public Product addProducts(Product product) throws ConstraintViolationException, ProductException;
 
-	public Optional<Product> getProductById(int id);
+	public Product getProductById(long id);
 
-	public Optional<Product> getProductByName(String productName);
+	public List<Product> getProductByName(String productName);
 
-	public void updateProducts(Product product);
+	public Product updateProducts(Product product) throws ConstraintViolationException;
 
-	public void deleteProductById(int id);
+	public void deleteProductById(long id) throws Exception;
+
+	public List<Product> getProductByCategory(String category);
+
+	public List<Product> getProductByProductType(String productType);
 	
 	
 }

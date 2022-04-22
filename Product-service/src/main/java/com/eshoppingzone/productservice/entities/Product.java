@@ -4,22 +4,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="product")
 public class Product {
 	
-	@Id
-	private int productId;
+	@Transient
+	public static final String SEQUENCE_NAME ="products_sequence";
 	
+	@Id
+	private long productId;
+	
+	@NotNull(message = "productType cannot be null")
 	private String productType;
+	
+	@NotNull(message = "productName cannot be null")
 	private String productName;
+	
+	@NotNull(message = "productType cannot be null")
 	private String category;
-	private Map<Integer, Double> rating;
-	private Map<Integer, String> review;
+	
+	private Map<String, Double> rating;
+	private Map<String, String> review;
+	
+	@NotNull(message = "productType cannot be null")
 	private List<String> image;
+	
+	@NotNull(message = "productType cannot be null")
+	@Min(value = 1, message = "price cannot be less than 1")
 	private double price;
+	
 	private String description;
 	private Map<String, String> specification;
 	
@@ -27,9 +46,14 @@ public class Product {
 		super();
 	}
 
-	public Product(int productId, String productType, String productName, String category, Map<Integer, Double> rating,
-			Map<Integer, String> review, List<String> image, double price, String description,
-			Map<String, String> specification) {
+	
+
+	public Product(long productId, @NotNull(message = "productType cannot be null") String productType,
+			@NotNull(message = "productName cannot be null") String productName,
+			@NotNull(message = "productType cannot be null") String category, Map<String, Double> rating,
+			Map<String, String> review, @NotNull(message = "productType cannot be null") List<String> image,
+			@NotNull(message = "productType cannot be null") @Min(value = 1, message = "price cannot be less than 1") double price,
+			String description, Map<String, String> specification) {
 		super();
 		this.productId = productId;
 		this.productType = productType;
@@ -43,11 +67,13 @@ public class Product {
 		this.specification = specification;
 	}
 
-	public int getProductId() {
+
+
+	public long getProductId() {
 		return productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(long productId) {
 		this.productId = productId;
 	}
 
@@ -75,19 +101,19 @@ public class Product {
 		this.category = category;
 	}
 
-	public Map<Integer, Double> getRating() {
+	public Map<String, Double> getRating() {
 		return rating;
 	}
 
-	public void setRating(Map<Integer, Double> rating) {
+	public void setRating(Map<String, Double> rating) {
 		this.rating = rating;
 	}
 
-	public Map<Integer, String> getReview() {
+	public Map<String, String> getReview() {
 		return review;
 	}
 
-	public void setReview(Map<Integer, String> review) {
+	public void setReview(Map<String, String> review) {
 		this.review = review;
 	}
 
